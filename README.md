@@ -37,7 +37,7 @@ This is where all the records will be collected.
 ### GPG encryption key
 
 ```
-D1ARY_KEY=0xENTRYPRION_KEY_ID
+D1ARY_KEY=0xENCRYPTION_KEY_ID
 ```
 
 If empty or not configured, records will be saved unencrypted. 
@@ -60,7 +60,7 @@ gpg --full-gen-key
 ```bash
 D1ARY_EDITOR=editor
 D1ARY_DIR=~/.d1ary
-D1ARY_KEY=0xENRTYPRION_KEY_ID
+D1ARY_KEY=0xENCRYPTION_KEY_ID
 ```
 
 
