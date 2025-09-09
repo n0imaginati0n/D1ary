@@ -14,7 +14,8 @@ The script is written for POSIX shell and should work in dash/bash. The editor
 used should block script execution until it is closed. This will keep the 
 workflow intact. Recommended editor is _nano_, but any editor supporting this 
 behavior can be used. The gpg key should be available. All settings can be done 
-using the __env__ file with KEY=value syntax or global environment variables.
+using the __.env__ file located in teh same directory as the script, with 
+KEY=value syntax or global environment variables. 
 
 ### Editor
 
@@ -54,7 +55,7 @@ or even
 gpg --full-gen-key
 ```
 
-### .venv file example
+### .env file example
 
 ```bash
 D1ARY_EDITOR=editor
