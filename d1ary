@@ -1,0 +1,65 @@
+#!/bin/sh
+
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if [ -f "${SCRIPT_DIR}/.env" ] ;
+then
+    . "${SCRIPT_DIR}/.env"
+fi
+
+if [ ! -n "${D1ARY_DIR}" ] ;
+then
+    D1ARY_DIR=~/.d1ary
+fi
+
+if [ ! -n "${D1ARY_EDITOR}" ] ;
+then
+    D1ARY_EDITOR=`which editor`
+fi
+
+if [ ! -n "${D1ARY_EDITOR}" ] ;
+then
+    D1ARY_EDITOR=`which nano`
+fi
+
+if [ ! -n "${D1ARY_EDITOR}" ] ;
+then
+    echo "Can't detect editor"
+    exit 1
+fi
+
+if [ ! -x "${D1ARY_EDITOR}" ] ;
+then
+    echo "Editor ${D1ARY_EDITOR} not found. Exit"
+    exit 2
+fi
+
+DNAM=${D1ARY_DIR}/`date +"%Y.%m.%d_%R"`.md
+
+cat <<EOF > ${DNAM}
+           .--.           .---.        .-.
+       .---|--|   .-.     |   |  .---. |~|    .--.
+    .--|===|  |---|_|--.__|   |--|:::| |~|-==-|==|---.
+    |%%|   |  |===| |~~|%%|   |--|   |_|~|    |  |___|-.
+    |  |   |  |===| |==|  |   |  |:::|=| |    |  |---|=|
+    |  |   |  |   |_|__|  |   |__|   | | |    |  |___| |
+    |~~|===|--|===|~|~~|%%|~~~|--|:::|=|~|----|==|---|=|
+    ^--^---'--^---^-^--^--^---'--^---^-^-^-==-^--^---^-'
+<<>><<>><<>><<>><<>><<>><<>><<>><<>><<>><<>><<>><<>><<>><<>>
+EOF
+
+echo '# Day '`date +%c` >> ${DNAM}
+
+echo >> ${DNAM}
+
+${D1ARY_EDITOR} ${DNAM}
+
+echo >> ${DNAM}
+
+if [ -n ${D1ARY_KEY} ] ;
+then
+    gpg -e -r ${D1ARY_KEY} ${DNAM} && rm ${DNAM}
+else
+    echo "Encryption key was not defined, the note will stay unencrypted"
+fi
