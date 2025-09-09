@@ -23,6 +23,11 @@ then
     D1ARY_EDITOR=`which nano`
 fi
 
+if [ ! -x "${D1ARY_EDITOR}" ] ;
+then
+    D1ARY_EDITOR=`which "${D1ARY_EDITOR}"`
+fi
+
 if [ ! -n "${D1ARY_EDITOR}" ] ;
 then
     echo "Can't detect editor"
@@ -35,7 +40,14 @@ then
     exit 2
 fi
 
-DNAM=${D1ARY_DIR}/`date +"%Y.%m.%d_%R"`.md
+
+if [ ! -d "${D1ARY_DIR}" ] ;
+then
+    mkdir -p "${D1ARY_DIR}"
+fi
+
+DNAM="${D1ARY_DIR}/`date +"%Y.%m.%d_%R"`.md"
+
 
 cat <<EOF > ${DNAM}
            .--.           .---.        .-.
@@ -57,9 +69,9 @@ ${D1ARY_EDITOR} ${DNAM}
 
 echo >> ${DNAM}
 
-if [ -n ${D1ARY_KEY} ] ;
+if [ ! -z ${D1ARY_KEY} ] ;
 then
     gpg -e -r ${D1ARY_KEY} ${DNAM} && rm ${DNAM}
 else
-    echo "Encryption key was not defined, the note will stay unencrypted"
+    echo "Encryption key was not defined, the note ${DNAM} will stay unencrypted"
 fi
